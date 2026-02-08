@@ -23,16 +23,11 @@
         .sidebar-item:hover { background-color: #1E293B; color: #F8FAFC; }
         .sidebar-item.active { background-color: #3B82F6; color: #FFFFFF; }
 
-        /* Card Task Styling */
-        .task-card {
-            background: #161920;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .task-card:hover {
-            border-color: #3B82F6;
-            transform: translateY(-2px);
-        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0F1115; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
@@ -78,64 +73,20 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    
-                    <div class="task-card p-5 rounded-2xl flex flex-col justify-between">
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden">
-                                <i class="fas fa-gamepad text-xl text-slate-600"></i> </div>
-                            <div>
-                                <h4 class="font-bold text-sm">Rise of Kingdoms</h4>
-                                <p class="text-[10px] text-slate-500">Reach City Hall Level 10</p>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex items-center justify-between">
-                            <span class="text-emerald-400 font-bold text-lg">$0.80</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2 rounded-lg transition-all">
-                                START TASK
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="task-card p-5 rounded-2xl flex flex-col justify-between">
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-mobile-alt text-xl text-slate-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm">TikTok Lite</h4>
-                                <p class="text-[10px] text-slate-500">New User Only - Install & Open</p>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex items-center justify-between">
-                            <span class="text-emerald-400 font-bold text-lg">$0.12</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2 rounded-lg transition-all">
-                                START TASK
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="task-card p-5 rounded-2xl flex flex-col justify-between">
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-flask text-xl text-slate-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm">Opinion Survey</h4>
-                                <p class="text-[10px] text-slate-500">Complete 5 Minute Survey</p>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex items-center justify-between">
-                            <span class="text-emerald-400 font-bold text-lg">$0.45</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2 rounded-lg transition-all">
-                                START TASK
-                            </button>
-                        </div>
-                    </div>
-
+                <div class="w-full bg-[#161920] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+                    <iframe 
+                        src="https://reward-me.eu/cbdd6976-050b-11f1-9fed-129a1c289511" 
+                        sandbox="allow-top-navigation allow-scripts allow-same-origin allow-popups allow-forms" 
+                        style="width: 100%; height: 900px; border: none; background: #161920;">
+                    </iframe>
                 </div>
+                <p class="mt-6 text-[10px] text-slate-600 text-center uppercase tracking-widest">
+                    Powered by MyLead Advertising Network
+                </p>
+
             </div>
         </div>
     </main>
+
 </body>
 </html>
