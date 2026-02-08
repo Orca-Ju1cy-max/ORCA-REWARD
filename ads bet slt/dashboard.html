@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORCA CONSOLE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0F1115; color: #E2E8F0; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #94A3B8;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            margin-bottom: 0.25rem;
+            text-decoration: none;
+        }
+        .sidebar-item:hover { background-color: #1E293B; color: #F8FAFC; }
+        .sidebar-item.active { background-color: #3B82F6; color: #FFFFFF; }
+        
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; }
+
+        .wallet-bg-icon {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 160px;
+            color: rgba(255, 255, 255, 0.03);
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-[#161920] border-r border-white/5 flex flex-col p-4 shadow-xl">
+        <div class="flex items-center gap-3 px-2 mb-10 mt-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                <i class="fas fa-orca text-white text-[10px]"></i>
+            </div>
+            <span class="font-bold text-lg tracking-tight uppercase">ORCA PRO</span>
+        </div>
+
+        <nav class="flex-1">
+            <a href="dashboard.html" class="sidebar-item active">
+                <i class="fas fa-th-large w-5 mr-3"></i> Dashboard
+            </a>
+            <a href="task.html" class="sidebar-item">
+                <i class="fas fa-list w-5 mr-3"></i> Task
+            </a>
+            <a href="withdraw.html" class="sidebar-item">
+                <i class="fas fa-wallet w-5 mr-3"></i> Withdraw
+            </a>
+            <a href="history.html" class="sidebar-item">
+                <i class="fas fa-history w-5 mr-3"></i> History
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+        
+        <header class="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#161920]/30 backdrop-blur-md">
+            <h2 class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Operations Console</h2>
+            
+            <div id="auth-section" class="flex items-center gap-3">
+                <div class="animate-pulse flex gap-2">
+                    <div class="h-4 w-12 bg-slate-700 rounded"></div>
+                    <div class="h-4 w-12 bg-slate-700 rounded"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scroll">
+            <div class="max-w-4xl mx-auto space-y-6">
+                
+                <div class="bg-[#161920] p-10 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Available Balance</p>
+                        <h3 class="text-6xl font-bold tracking-tighter text-white">$<span id="balance">0.00</span></h3>
+                        <p class="mt-4 text-[10px] text-emerald-500 font-mono tracking-widest uppercase">Verified Secure Account</p>
+                    </div>
+                    <i class="fas fa-wallet wallet-bg-icon"></i>
+                </div>
+
+                <div class="bg-[#161920] rounded-3xl border border-white/5 overflow-hidden">
+                    <div class="px-8 py-5 border-b border-white/5 flex justify-between items-center bg-white/[0.01]">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Activity Log</h4>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                            <span class="text-[10px] font-bold text-emerald-500 uppercase">Live Network</span>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto text-sm">
+                        <table class="w-full text-left">
+                            <thead class="text-slate-500 text-[10px] uppercase font-bold border-b border-white/5">
+                                <tr>
+                                    <th class="px-8 py-4">Transaction_ID</th>
+                                    <th class="px-8 py-4">Status</th>
+                                    <th class="px-8 py-4 text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-list" class="divide-y divide-white/5"></tbody>
+                        </table>
+                        <div id="no-data" class="py-24 text-center text-slate-600 text-xs italic">
+                            No incoming data streams detected.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6HjmjeTYjoZV_NdlmZLfDi-gx-73_LpU",
+            authDomain: "orca-rewarded.firebaseapp.com",
+            projectId: "orca-rewarded",
+            storageBucket: "orca-rewarded.firebasestorage.app",
+            messagingSenderId: "912166707177",
+            appId: "1:912166707177:web:7888e20c9cd9a3aaff7578"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- SESSION PROTECTOR ---
+        // Ini fungsi paling sakti. Dia bakal mantau status login secara global.
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // JIKA ADA USER LOGIN (User A atau User B)
+                console.log("Logged in as:", user.uid);
+                
+                // Ambil data spesifik dari Firestore sesuai UID yang sedang aktif
+                const userRef = doc(db, "users", user.uid);
+                
+                onSnapshot(userRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        updateUI(userData);
+                    } else {
+                        console.error("No Firestore document found for this UID.");
+                    }
+                });
+            } else {
+                // JIKA TIDAK ADA LOGIN (Atau baru saja Logout)
+                console.log("No active session.");
+                // Bersihkan tampilan atau tendang ke login
+                renderLoggedOutUI();
+            }
+        });
+
+        function updateUI(data) {
+            // 1. Ganti tombol Login di Header jadi Nama User + Logout
+            const authSection = document.getElementById('auth-section');
+            authSection.innerHTML = `
+                <div class="flex items-center gap-4">
+                    <div class="flex flex-col items-end">
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">${data.fullName || 'Anonymous'}</span>
+                        <button id="logoutBtn" class="text-[9px] text-slate-500 hover:text-red-400 uppercase font-bold transition-colors">Terminate Session</button>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/50 flex items-center justify-center">
+                        <i class="fas fa-user text-blue-500 text-xs"></i>
+                    </div>
+                </div>
+            `;
+
+            // 2. Update Balance
+            const balanceElement = document.getElementById('balance');
+            const val = data.balance || 0;
+            balanceElement.innerText = val.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+            // 3. Event Listener Logout
+            document.getElementById('logoutBtn').onclick = async () => {
+                await signOut(auth);
+                localStorage.clear(); // Bersihkan sisa-sisa catatan
+                window.location.href = "gate/login.html"; // Tendang balik
+            };
+        }
+
+        function renderLoggedOutUI() {
+            const authSection = document.getElementById('auth-section');
+            authSection.innerHTML = `
+                <a href="gate/login.html" class="text-xs font-semibold text-slate-400 hover:text-white px-4 py-2 transition-all">Login</a>
+                <a href="gate/register.html" class="text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-all">Sign Up</a>
+            `;
+            document.getElementById('balance').innerText = "0.00";
+            // Opsional: Redirect paksa kalau mau bener-bener privat
+            // window.location.href = "gate/login.html";
+        }
+    </script>
+</body>
+</html>

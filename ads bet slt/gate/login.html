@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORCA PRO | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0F1115; 
+            color: #E2E8F0;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #0f1115 80%);
+        }
+        .glass {
+            background: rgba(22, 25, 32, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        input::-ms-reveal, input::-ms-clear { display: none; }
+        .shake { animation: shake 0.4s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-6 relative overflow-hidden">
+
+    <div id="statusBox" class="hidden absolute top-8 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full backdrop-blur-md z-50">
+        <span id="statusText"></span>
+    </div>
+
+    <div class="absolute top-8 left-8">
+        <a href="../dashboard.html" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest hover:text-white transition-all group">
+            <div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center group-hover:border-blue-500 transition-all">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <span>Back to Console</span>
+        </a>
+    </div>
+
+    <div class="w-full max-w-[850px] grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div class="lg:col-span-8 space-y-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/20">
+                    <i class="fas fa-orca text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Welcome Back</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold font-mono">Secure Identity Verification</p>
+                </div>
+            </div>
+
+            <div class="glass p-8 rounded-[2rem] shadow-2xl">
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2 ml-1">Email Address</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs"></i>
+                            <input type="email" id="email" required 
+                                class="w-full bg-black/20 border border-white/5 rounded-xl py-3.5 pl-11 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all text-white"
+                                placeholder="name@example.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2 ml-1">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Password</label>
+                            <a href="#" class="text-[10px] font-bold text-blue-500 hover:text-blue-400 uppercase tracking-widest">Forgot?</a>
+                        </div>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs"></i>
+                            <input type="password" id="password" required 
+                                class="w-full bg-black/20 border border-white/5 rounded-xl py-3.5 pl-11 pr-12 text-sm focus:outline-none focus:border-blue-500 transition-all text-white"
+                                placeholder="••••••••">
+                            <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400 transition-colors">
+                                <i id="eyeIcon" class="fas fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 px-1">
+                        <input type="checkbox" id="remember" class="w-4 h-4 rounded border-white/10 bg-black/20 text-blue-600 focus:ring-0">
+                        <label for="remember" class="text-[11px] text-slate-400 cursor-pointer italic">Remember this device for 30 days</label>
+                    </div>
+
+                    <button type="submit" id="submitBtn" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/10 transition-all text-xs uppercase tracking-[0.2em]">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col">
+            <div class="glass p-8 rounded-[2rem] text-center flex-1 flex flex-col justify-center border-blue-500/20">
+                <div class="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-plus text-emerald-500 text-lg"></i>
+                </div>
+                <h3 class="font-bold text-sm uppercase tracking-widest mb-2">New Here?</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-8">Start your journey and get access to our pro console features.</p>
+                <a href="register.html" class="block w-full border border-white/10 hover:border-blue-500 hover:text-blue-500 text-slate-300 font-bold py-4 rounded-xl transition-all text-[10px] uppercase tracking-[0.2em]">
+                    Create Account
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6HjmjeTYjoZV_NdlmZLfDi-gx-73_LpU",
+            authDomain: "orca-rewarded.firebaseapp.com",
+            projectId: "orca-rewarded",
+            storageBucket: "orca-rewarded.firebasestorage.app",
+            messagingSenderId: "912166707177",
+            appId: "1:912166707177:web:7888e20c9cd9a3aaff7578"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // UI Helpers
+        window.togglePassword = function() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        }
+
+        function showMsg(text, isError = true) {
+            const box = document.getElementById('statusBox');
+            const txt = document.getElementById('statusText');
+            box.className = `absolute top-8 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full backdrop-blur-md z-50 ${isError ? 'bg-red-500/10 border border-red-500/50 text-red-500' : 'bg-emerald-500/10 border border-emerald-500/50 text-emerald-500'}`;
+            txt.innerText = text;
+            box.classList.remove('hidden');
+            if(isError) document.getElementById('submitBtn').classList.add('shake');
+            setTimeout(() => { 
+                box.classList.add('hidden'); 
+                document.getElementById('submitBtn').classList.remove('shake');
+            }, 3000);
+        }
+
+        // --- CORE LOGIC PERBAIKAN ---
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            const btn = document.getElementById('submitBtn');
+
+            try {
+                btn.innerText = "VERIFYING...";
+                btn.disabled = true;
+
+                // 1. Verifikasi Email & Password ke Firebase Auth
+                const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+                const user = userCredential.user;
+
+                // 2. Tarik data profil (fullName, balance, dll) dari Firestore
+                // Kita pakai user.uid sebagai kunci pencarian dokumen
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    
+                    // PENTING: Kita selipkan UID ke dalam object data sebelum disimpan
+                    // Supaya dashboard tahu UID siapa yang harus dipantau
+                    userData.uid = user.uid; 
+
+                    // Simpan ke LocalStorage agar Dashboard bisa mengenali sesi ini
+                    localStorage.setItem('orcaUser', JSON.stringify(userData));
+
+                    showMsg("Access Granted. Redirecting...", false);
+                    
+                    // Beri jeda sedikit agar user bisa baca pesan sukses
+                    setTimeout(() => {
+                        window.location.href = "../dashboard.html"; 
+                    }, 1200);
+                } else {
+                    showMsg("Account data not initialized in DB.");
+                    btn.innerText = "Sign In";
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error(error);
+                showMsg("Invalid email or password.");
+                btn.innerText = "Sign In";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

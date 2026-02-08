@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORCA PRO | Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0F1115; 
+            color: #E2E8F0;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #0f1115 80%);
+        }
+        .glass {
+            background: rgba(22, 25, 32, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        input::-ms-reveal, input::-ms-clear { display: none; }
+        .shake { animation: shake 0.4s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-6 relative overflow-hidden">
+
+    <div class="absolute top-8 left-8">
+        <a href="../dashboard.html" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest hover:text-white transition-all group">
+            <div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center group-hover:border-blue-500 transition-all">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <span>Back to Console</span>
+        </a>
+    </div>
+
+    <div class="w-full max-w-[850px] grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-8 space-y-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/20">
+                    <i class="fas fa-orca text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Create Account</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold font-mono">Secure Access Enrollment</p>
+                </div>
+            </div>
+
+            <div class="glass p-8 rounded-[2rem] shadow-2xl relative">
+                <div id="statusBox" class="hidden absolute top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full backdrop-blur-md z-10">
+                    <span id="statusText"></span>
+                </div>
+
+                <form id="regForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="md:col-span-2">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2 ml-1">Full Name</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs"></i>
+                            <input type="text" id="fullName" required class="w-full bg-black/20 border border-white/5 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all text-white" placeholder="Orca Juicy">
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2 ml-1">Email Address</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs"></i>
+                            <input type="email" id="email" required class="w-full bg-black/20 border border-white/5 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all text-white" placeholder="name@example.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2 ml-1">Password</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs"></i>
+                            <input type="password" id="pass1" required class="w-full bg-black/20 border border-white/5 rounded-xl py-3 pl-11 pr-12 text-sm focus:outline-none focus:border-blue-500 transition-all text-white" placeholder="••••••••">
+                            <button type="button" onclick="togglePass('pass1', 'eye1')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400">
+                                <i id="eye1" class="fas fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2 ml-1">Confirm</label>
+                        <div class="relative">
+                            <i class="fas fa-shield-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs"></i>
+                            <input type="password" id="pass2" required class="w-full bg-black/20 border border-white/5 rounded-xl py-3 pl-11 pr-12 text-sm focus:outline-none focus:border-blue-500 transition-all text-white" placeholder="••••••••">
+                            <button type="button" onclick="togglePass('pass2', 'eye2')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400">
+                                <i id="eye2" class="fas fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 flex items-center gap-2 px-1 py-2">
+                        <input type="checkbox" id="terms" required class="w-4 h-4 rounded border-white/10 bg-black/20 text-blue-600 focus:ring-0">
+                        <label for="terms" class="text-[10px] text-slate-500 cursor-pointer italic">By clicking "Create Account", you agree to the Terms of Service.</label>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <button id="submitBtn" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/10 transition-all text-xs uppercase tracking-[0.2em]">
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-4 h-full flex flex-col">
+            <div class="glass p-8 rounded-[2rem] text-center flex-1 flex flex-col justify-center border-blue-500/20">
+                <div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-fingerprint text-blue-500 text-lg"></i>
+                </div>
+                <h3 class="font-bold text-sm uppercase tracking-widest mb-2">Already Registered?</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-8">Access your dashboard by signing in with your credentials.</p>
+                <a href="login.html" class="block w-full border border-white/10 hover:border-blue-500 hover:text-blue-500 text-slate-300 font-bold py-4 rounded-xl transition-all text-[10px] uppercase tracking-[0.2em]">
+                    Sign In Instead
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6HjmjeTYjoZV_NdlmZLfDi-gx-73_LpU",
+            authDomain: "orca-rewarded.firebaseapp.com",
+            projectId: "orca-rewarded",
+            storageBucket: "orca-rewarded.firebasestorage.app",
+            messagingSenderId: "912166707177",
+            appId: "1:912166707177:web:7888e20c9cd9a3aaff7578",
+            measurementId: "G-F80J14GSMQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        function showMsg(text, isError = true) {
+            const box = document.getElementById('statusBox');
+            const txt = document.getElementById('statusText');
+            const btn = document.getElementById('submitBtn');
+            box.className = `absolute top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full backdrop-blur-md z-10 ${isError ? 'bg-red-500/10 border border-red-500/50 text-red-500' : 'bg-emerald-500/10 border border-emerald-500/50 text-emerald-500'}`;
+            txt.innerText = text;
+            box.classList.remove('hidden');
+            if(isError) btn.classList.add('bg-red-600', 'shake');
+            setTimeout(() => {
+                box.classList.add('hidden');
+                btn.classList.remove('bg-red-600', 'shake');
+            }, 4000);
+        }
+
+        window.togglePass = function(inputId, eyeId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(eyeId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        }
+
+        document.getElementById('regForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const p1 = document.getElementById('pass1').value;
+            const p2 = document.getElementById('pass2').value;
+            const btn = document.getElementById('submitBtn');
+
+            if (p1 !== p2) { showMsg("Password doesn't match!"); return; }
+
+            try {
+                btn.innerText = "CREATING ACCOUNT...";
+                btn.disabled = true;
+                const userCredential = await createUserWithEmailAndPassword(auth, email, p1);
+                await setDoc(doc(db, "users", userCredential.user.uid), {
+                    fullName: name,
+                    email: email,
+                    role: "user",
+                    createdAt: new Date().toISOString()
+                });
+
+                showMsg("Registration Success! Redirecting...", false);
+                setTimeout(() => { window.location.href = "login.html"; }, 2000);
+            } catch (error) {
+                showMsg(error.message);
+                btn.innerText = "Create Account";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

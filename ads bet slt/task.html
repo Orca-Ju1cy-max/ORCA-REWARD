@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORCA - Task List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0F1115; color: #E2E8F0; }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #94A3B8;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            margin-bottom: 0.25rem;
+            text-decoration: none;
+        }
+        .sidebar-item:hover { background-color: #1E293B; color: #F8FAFC; }
+        .sidebar-item.active { background-color: #3B82F6; color: #FFFFFF; }
+
+        /* Card Task Styling */
+        .task-card {
+            background: #161920;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .task-card:hover {
+            border-color: #3B82F6;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-[#161920] border-r border-white/5 flex flex-col p-4">
+        <div class="flex items-center gap-3 px-2 mb-10 mt-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                <i class="fas fa-orca text-white text-[10px]"></i>
+            </div>
+            <span class="font-bold text-lg tracking-tight uppercase">ORCA PRO</span>
+        </div>
+        <nav class="flex-1">
+            <a href="dashboard.html" class="sidebar-item">
+                <i class="fas fa-th-large w-5 mr-3"></i> Dashboard
+            </a>
+            <a href="task.html" class="sidebar-item active">
+                <i class="fas fa-list w-5 mr-3"></i> Task
+            </a>
+            <a href="withdraw.html" class="sidebar-item">
+                <i class="fas fa-wallet w-5 mr-3"></i> Withdraw
+            </a>
+            <a href="history.html" class="sidebar-item">
+                <i class="fas fa-history w-5 mr-3"></i> History
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#161920]/30 backdrop-blur-md">
+            <h2 class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Available Offers</h2>
+            <div class="flex items-center gap-3">
+                <span class="text-xs font-medium text-slate-400">Balance: <span class="text-white font-bold">$0.00</span></span>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-5xl mx-auto">
+                
+                <div class="mb-8 p-4 bg-blue-600/10 border border-blue-600/20 rounded-xl">
+                    <p class="text-xs text-blue-400 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        Complete tasks correctly to receive rewards. Rewards are processed within 24 hours.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <div class="task-card p-5 rounded-2xl flex flex-col justify-between">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden">
+                                <i class="fas fa-gamepad text-xl text-slate-600"></i> </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Rise of Kingdoms</h4>
+                                <p class="text-[10px] text-slate-500">Reach City Hall Level 10</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="text-emerald-400 font-bold text-lg">$0.80</span>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2 rounded-lg transition-all">
+                                START TASK
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="task-card p-5 rounded-2xl flex flex-col justify-between">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-mobile-alt text-xl text-slate-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">TikTok Lite</h4>
+                                <p class="text-[10px] text-slate-500">New User Only - Install & Open</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="text-emerald-400 font-bold text-lg">$0.12</span>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2 rounded-lg transition-all">
+                                START TASK
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="task-card p-5 rounded-2xl flex flex-col justify-between">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-flask text-xl text-slate-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Opinion Survey</h4>
+                                <p class="text-[10px] text-slate-500">Complete 5 Minute Survey</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="text-emerald-400 font-bold text-lg">$0.45</span>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2 rounded-lg transition-all">
+                                START TASK
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
